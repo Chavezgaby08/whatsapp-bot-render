@@ -4,7 +4,14 @@ const qrcode = require("qrcode-terminal");
 // Configuración del cliente
 const client = new Client({
   authStrategy: new LocalAuth(), // Guarda la sesión para no escanear QR cada vez
-  puppeteer: { headless: true }, // Ejecuta sin abrir navegador (ahorra recursos)
+  puppeteer: {
+    headless: true,
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-dev-shm-usage", // Evita problemas de memoria
+    ],
+  }, // Ejecuta sin abrir navegador (ahorra recursos)
 });
 
 // Genera QR para vincular WhatsApp Web
